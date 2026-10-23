@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카페 모퉁이</title>
+  <style>
+    :root {
+      --accent: #2f5d50;
+      --accent-light: #e8f0ed;
+      --text: #2b2b2b;
+      --muted: #6b6b6b;
+      --bg: #ffffff;
+      --card: #ffffff;
+      --line: #e6e6e6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      font-size: 16px;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    .site-header {
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1rem;
+      margin-left: 20px;
+    }
+
+    .nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 72px 0 48px;
+    }
+
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    .hero .divider {
+      width: 48px;
+      height: 3px;
+      background: var(--accent);
+      margin: 24px auto 0;
+      border-radius: 2px;
+    }
+
+    /* Hero photo */
+    .hero-photo {
+      padding-bottom: 64px;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Cards */
+    .cards {
+      padding-bottom: 72px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 28px 24px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.09);
+    }
+
+    .card-photo {
+      width: calc(100% + 48px);
+      max-width: none;
+      margin: -28px -24px 20px;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .card .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent-light);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    .card ul {
+      list-style: none;
+    }
+
+    .card li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 0;
+      border-bottom: 1px dashed var(--line);
+      font-size: 1rem;
+    }
+
+    .card li:last-child {
+      border-bottom: none;
+    }
+
+    .card li span:last-child {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .card p + p {
+      margin-top: 8px;
+    }
+
+    .open-status {
+      margin-top: 14px;
+      font-weight: 600;
+    }
+
+    /* FAQ */
+    .faq {
+      padding-bottom: 72px;
+    }
+
+    .faq h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 20px;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::before {
+      content: "Q.";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+
+    .faq-item summary .question {
+      flex: 1;
+    }
+
+    .faq-item summary .chevron {
+      flex-shrink: 0;
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid var(--accent);
+      border-bottom: 2px solid var(--accent);
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+      margin-right: 4px;
+    }
+
+    .faq-item[open] summary .chevron {
+      transform: rotate(-135deg);
+    }
+
+    .faq-item summary:hover {
+      background: var(--accent-light);
+    }
+
+    .faq-item .answer {
+      padding: 0 20px 16px 20px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .faq-item .answer::before {
+      content: "A.";
+      color: var(--accent);
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    /* Contact */
+    .contact {
+      background: var(--card);
+      border-top: 1px solid var(--line);
+      padding: 56px 0;
+    }
+
+    .contact h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .contact-list {
+      list-style: none;
+    }
+
+    .contact-list li {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 1rem;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-list .label {
+      min-width: 88px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .contact-list a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid #cfd8d4;
+    }
+
+    .contact-list a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 24px 0;
+      font-size: 1rem;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    /* Mobile */
+    @media (max-width: 720px) {
+      .nav {
+        display: none;
+      }
+
+      .container {
+        padding: 0 16px;
+      }
+
+      .hero {
+        padding: 48px 0 36px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .hero-photo {
+        padding-bottom: 44px;
+      }
+
+      .hero-photo img {
+        aspect-ratio: 4 / 3;
+        border-radius: 12px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .cards,
+      .faq {
+        padding-bottom: 48px;
+      }
+
+      .contact {
+        padding: 40px 0;
+      }
+
+      .contact-list li {
+        flex-direction: column;
+        gap: 2px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="index.html">카페 모퉁이</a>
+      <nav class="nav">
+        <a href="#menu">대표 메뉴</a>
+        <a href="#hours">영업시간</a>
+        <a href="#location">오시는 길</a>
+        <a href="#faq">자주 묻는 질문</a>
+        <a href="#contact">연락처</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>카페 모퉁이</h1>
+        <p>동네 책 읽는 카페</p>
+        <div class="divider"></div>
+      </div>
+    </section>
+
+    <section class="hero-photo">
+      <div class="container">
+        <img src="img/shop-front.jpg" alt="초록색 문이 있는 카페 모퉁이 가게 앞모습">
+      </div>
+    </section>
+
+    <section class="cards">
+      <div class="container">
+        <div class="card-grid">
+          <article class="card" id="menu">
+            <img class="card-photo" src="img/menu-1.jpg" alt="카페 모퉁이의 대표 메뉴인 라떼와 수제 스콘">
+            <div class="icon">☕</div>
+            <h2>대표 메뉴</h2>
+            <ul>
+              <li><span>모퉁이 라떼</span><span>5,000원</span></li>
+              <li><span>핸드드립 커피</span><span>5,500원</span></li>
+              <li><span>수제 스콘</span><span>3,500원</span></li>
+              <li><span>계절 과일차</span><span>6,000원</span></li>
+            </ul>
+          </article>
+
+          <article class="card" id="hours">
+            <div class="icon">🕘</div>
+            <h2>영업시간</h2>
+            <ul>
+              <li><span>월 – 금</span><span>09:00 – 21:00</span></li>
+              <li><span>토 – 일</span><span>10:00 – 20:00</span></li>
+              <li><span>휴무</span><span>매주 화요일</span></li>
+            </ul>
+            <p class="open-status" id="open-status"></p>
+          </article>
+
+          <article class="card" id="location">
+            <div class="icon">📍</div>
+            <h2>오시는 길</h2>
+            <p>서울시 어느구 모퉁이길 12, 1층</p>
+            <p>모퉁이역 2번 출구에서 도보 3분. 골목 끝 모퉁이에 있는 초록색 문을 찾아주세요.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <div class="container">
+        <h2>자주 묻는 질문</h2>
+
+        <details class="faq-item">
+          <summary><span class="question">주차가 되나요?</span><span class="chevron"></span></summary>
+          <p class="answer">건물 지하 1시간 무료</p>
+        </details>
+
+        <details class="faq-item">
+          <summary><span class="question">예약이 되나요?</span><span class="chevron"></span></summary>
+          <p class="answer">전화 예약만 받습니다</p>
+        </details>
+
+        <details class="faq-item">
+          <summary><span class="question">반려동물 동반 가능한가요?</span><span class="chevron"></span></summary>
+          <p class="answer">테라스 자리만 가능</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2>연락처</h2>
+      <ul class="contact-list">
+        <li><span class="label">전화</span><a href="tel:02-000-0000">02-000-0000</a></li>
+        <li><span class="label">이메일</span><a href="mailto:hello@cafe-motungi.kr">hello@cafe-motungi.kr</a></li>
+        <li><span class="label">인스타그램</span><span>@cafe_motungi</span></li>
+        <li><span class="label">주소</span><span>서울시 어느구 모퉁이길 12, 1층</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      © <span id="year"></span> 카페 모퉁이
+    </div>
+  </footer>
+
+  <script>
+    // Current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple open/closed indicator based on business hours
+    (function () {
+      var now = new Date();
+      var day = now.getDay(); // 0 Sun ... 6 Sat
+      var minutes = now.getHours() * 60 + now.getMinutes();
+      var status = document.getElementById('open-status');
+      var open, close;
+
+      if (day === 2) {
+        status.textContent = '오늘은 정기 휴무일입니다.';
+        status.style.color = '#a0522d';
+        return;
+      }
+
+      if (day === 0 || day === 6) {
+        open = 10 * 60; close = 20 * 60;
+      } else {
+        open = 9 * 60; close = 21 * 60;
+      }
+
+      if (minutes >= open && minutes < close) {
+        status.textContent = '지금 영업 중입니다.';
+        status.style.color = '#2f5d50';
+      } else {
+        status.textContent = '지금은 영업 시간이 아닙니다.';
+        status.style.color = '#a0522d';
+      }
+    })();
+
+    // FAQ: keep only one answer open at a time
+    (function () {
+      var items = document.querySelectorAll('.faq-item');
+      items.forEach(function (item) {
+        item.addEventListener('toggle', function () {
+          if (!item.open) return;
+          items.forEach(function (other) {
+            if (other !== item) other.open = false;
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
