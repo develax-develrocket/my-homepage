@@ -281,6 +281,75 @@
       margin-right: 8px;
     }
 
+    /* Notice */
+    .notice {
+      padding-bottom: 72px;
+    }
+
+    .notice h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .notice-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .notice-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .notice-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .notice-item summary .date {
+      flex-shrink: 0;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .notice-item summary .title {
+      flex: 1;
+    }
+
+    .notice-item summary .chevron {
+      flex-shrink: 0;
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid var(--accent);
+      border-bottom: 2px solid var(--accent);
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+      margin-right: 4px;
+    }
+
+    .notice-item[open] summary .chevron {
+      transform: rotate(-135deg);
+    }
+
+    .notice-item summary:hover {
+      background: var(--accent-light);
+    }
+
+    .notice-item .body {
+      padding: 0 20px 16px 20px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
     /* Contact */
     .contact {
       background: var(--card);
@@ -374,8 +443,17 @@
       }
 
       .cards,
-      .faq {
+      .faq,
+      .notice {
         padding-bottom: 48px;
+      }
+
+      .notice-item summary {
+        flex-wrap: wrap;
+      }
+
+      .notice-item summary .date {
+        width: 100%;
       }
 
       .contact {
@@ -399,6 +477,7 @@
         <a href="#hours">영업시간</a>
         <a href="#location">오시는 길</a>
         <a href="#faq">자주 묻는 질문</a>
+        <a href="#notice">공지사항</a>
         <a href="#contact">연락처</a>
       </nav>
     </div>
@@ -475,6 +554,27 @@
         </details>
       </div>
     </section>
+
+    <section class="notice" id="notice">
+      <div class="container">
+        <h2>공지사항</h2>
+
+        <details class="notice-item">
+          <summary><span class="date">2026.10.23</span><span class="title">주말 영업시간 변경 안내</span><span class="chevron"></span></summary>
+          <p class="body">10월 25일(토)부터 주말에는 아침 9시에 문을 엽니다. 이른 아침 커피 한 잔 하러 오세요.</p>
+        </details>
+
+        <details class="notice-item">
+          <summary><span class="date">2026.10.20</span><span class="title">11월 시즌 메뉴 출시</span><span class="chevron"></span></summary>
+          <p class="body">11월 1일부터 밤 라떼와 단호박 스콘을 선보입니다. 재료 소진 시 조기 마감될 수 있습니다.</p>
+        </details>
+
+        <details class="notice-item">
+          <summary><span class="date">2026.10.15</span><span class="title">10월 정기 휴무 안내</span><span class="chevron"></span></summary>
+          <p class="body">10월은 매주 화요일 정기 휴무 외 추가 휴무가 없습니다. 연휴 영업 여부는 인스타그램에서 가장 먼저 알려드립니다.</p>
+        </details>
+      </div>
+    </section>
   </main>
 
   <section class="contact" id="contact">
@@ -529,9 +629,9 @@
       }
     })();
 
-    // FAQ: keep only one answer open at a time
-    (function () {
-      var items = document.querySelectorAll('.faq-item');
+    // FAQ / Notice: keep only one item open at a time within each group
+    ['.faq-item', '.notice-item'].forEach(function (selector) {
+      var items = document.querySelectorAll(selector);
       items.forEach(function (item) {
         item.addEventListener('toggle', function () {
           if (!item.open) return;
@@ -540,7 +640,7 @@
           });
         });
       });
-    })();
+    });
   </script>
 </body>
 </html>
